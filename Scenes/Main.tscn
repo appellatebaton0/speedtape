@@ -7,6 +7,17 @@
 [ext_resource type="Resource" uid="uid://7gdbj7apr7be" path="res://Assets/Punchcards/UpPunchcard.tres" id="4_v1gob"]
 [ext_resource type="Resource" uid="uid://bw7s5otqj6qqu" path="res://Assets/Punchcards/RightPunchcard.tres" id="5_jw32o"]
 [ext_resource type="Resource" uid="uid://30snqrwweqeg" path="res://Assets/Punchcards/LeftPunchcard.tres" id="6_50glp"]
+[ext_resource type="Script" uid="uid://din0pcxshj7gj" path="res://Scenes/Punchcard/PunchcardDecorator/DashDecorator.gd" id="6_jw32o"]
+
+[sub_resource type="Resource" id="Resource_ery76"]
+script = ExtResource("6_jw32o")
+decorates = ExtResource("4_v1gob")
+metadata/_custom_type_script = "uid://din0pcxshj7gj"
+
+[sub_resource type="Resource" id="Resource_8rmsp"]
+script = ExtResource("6_jw32o")
+decorates = ExtResource("4_v1gob")
+metadata/_custom_type_script = "uid://din0pcxshj7gj"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xf4i5"]
 size = Vector2(384, 32)
@@ -42,7 +53,7 @@ theme_override_constants/margin_bottom = 15
 
 [node name="Feedtape" parent="CanvasLayer/HUD/MarginContainer" unique_id=719412933 instance=ExtResource("2_rgh2o")]
 layout_mode = 2
-feedtape = Array[ExtResource("3_pbw6q")]([ExtResource("4_v1gob"), ExtResource("5_jw32o"), ExtResource("6_50glp")])
+feedtape = Array[ExtResource("3_pbw6q")]([SubResource("Resource_ery76"), ExtResource("5_jw32o"), SubResource("Resource_8rmsp"), ExtResource("6_50glp")])
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1095232342]
 position = Vector2(61, 42)
