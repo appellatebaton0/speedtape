@@ -1,5 +1,19 @@
 class_name Player extends CharacterBody2D
 
+## Allow anyone to get the most-recently made instance.
+static var _instance:Player
+static func get_instance() -> Player: return _instance
+func _init() -> void: _instance = self
+
+var feedtape:Feedtape:
+	get():
+		if feedtape == null:
+			feedtape = Feedtape.get_instance()
+		return feedtape
+
+#region Exported Variables
+
+@export_group("Jumping")
 ## How long the jump input will buffer, so you can hit jump before being on the ground and still jump (in seconds).
 @export var jump_buffering := 0.1
 var jump_buffer := 0.0 # The current jump buffer
@@ -10,11 +24,13 @@ var coyote_buffer := 0.0 # The current coyote jump buffer
 ## How much upwards velocity is applied on a jump.
 @export var jump_velocity := 300.0
 
+@export_group("Acceleration")
 ## How much the actor accelerates on the ground while trying to move, per second.
 @export var floor_acceleration := 15.0
 ## How much the actor accelerates while trying to move, per second.
 @export var air_acceleration := 15.0
 
+@export_group("Friction")
 enum friction_types{
 	subtract, ## Subtract the value from the current speed.
 	divide ## Divide the current speed by the value
@@ -30,16 +46,18 @@ enum friction_types{
 ## What kind of friction to use while midair
 @export var air_friction_type := friction_types.subtract
 
+@export_group("")
 ## The maximum speed the actor can reach through this (other forces can apply more momentum).
 @export var max_speed := 100.0
 var speed:float = 0.0
 ## How much gravity affects the actor.
 @export var gravity_multiplier := 1.0
 
+#endregion
+
 func _physics_process(delta: float) -> void:
 	
 	## Gravity
-	
 	if not is_on_floor():
 		velocity += delta * get_gravity() * gravity_multiplier
 		
@@ -79,5 +97,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, delta * current_friction * 60.0)
 
+	if feedtape: feedtape._player_process(self, delta)
+	
 	
 	move_and_slide()

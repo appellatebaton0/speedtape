@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bs602adwl7qj4"]
+
+[ext_resource type="Script" uid="uid://bpsuki0n50dv4" path="res://Scenes/Feedtape/Feedtape.gd" id="1_ery76"]
+[ext_resource type="Texture2D" uid="uid://bcg2flavqkjxn" path="res://icon.svg" id="1_ud2mh"]
+
+[node name="Feedtape" type="Control" unique_id=719412933]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_ery76")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1662630178]
+layout_mode = 0
+offset_right = 1122.0
+offset_bottom = 48.0
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=996667538]
+modulate = Color(1.339, 1.339, 1.339, 1)
+custom_minimum_size = Vector2(8, 48)
+layout_mode = 0
+texture = ExtResource("1_ud2mh")
+expand_mode = 1

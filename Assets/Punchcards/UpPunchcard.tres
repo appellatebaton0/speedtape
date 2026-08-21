@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Punchcard" format=3 uid="uid://7gdbj7apr7be"]
+
+[ext_resource type="Script" uid="uid://dg7mpiann4iwq" path="res://Scenes/Punchcard/Punchcard.gd" id="1_v0buf"]
+
+[resource]
+script = ExtResource("1_v0buf")
+_direction = Vector2(0, -1)
+metadata/_custom_type_script = "uid://dg7mpiann4iwq"

@@ -2,6 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://bc1h3k0ro2kf2" path="res://Scenes/Player/Player.tscn" id="1_idj7w"]
 [ext_resource type="Texture2D" uid="uid://bcg2flavqkjxn" path="res://icon.svg" id="2_kln2b"]
+[ext_resource type="PackedScene" uid="uid://bs602adwl7qj4" path="res://Scenes/Feedtape/Feedtape.tscn" id="2_rgh2o"]
+[ext_resource type="Script" uid="uid://dg7mpiann4iwq" path="res://Scenes/Punchcard/Punchcard.gd" id="3_pbw6q"]
+[ext_resource type="Resource" uid="uid://7gdbj7apr7be" path="res://Assets/Punchcards/UpPunchcard.tres" id="4_v1gob"]
+[ext_resource type="Resource" uid="uid://bw7s5otqj6qqu" path="res://Assets/Punchcards/RightPunchcard.tres" id="5_jw32o"]
+[ext_resource type="Resource" uid="uid://30snqrwweqeg" path="res://Assets/Punchcards/LeftPunchcard.tres" id="6_50glp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xf4i5"]
 size = Vector2(384, 32)
@@ -35,40 +40,9 @@ theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="Feedtape" type="Control" parent="CanvasLayer/HUD/MarginContainer" unique_id=1497311962]
+[node name="Feedtape" parent="CanvasLayer/HUD/MarginContainer" unique_id=719412933 instance=ExtResource("2_rgh2o")]
 layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HUD/MarginContainer/Feedtape" unique_id=1535631109]
-layout_mode = 0
-offset_right = 1122.0
-offset_bottom = 48.0
-size_flags_vertical = 0
-theme_override_constants/separation = 0
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HUD/MarginContainer/Feedtape/HBoxContainer" unique_id=646845499]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("2_kln2b")
-expand_mode = 1
-
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/HUD/MarginContainer/Feedtape/HBoxContainer" unique_id=479130991]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("2_kln2b")
-expand_mode = 1
-
-[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/HUD/MarginContainer/Feedtape/HBoxContainer" unique_id=1015676148]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-texture = ExtResource("2_kln2b")
-expand_mode = 1
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HUD/MarginContainer/Feedtape" unique_id=1979819091]
-modulate = Color(1.339, 1.339, 1.339, 1)
-custom_minimum_size = Vector2(8, 48)
-layout_mode = 0
-texture = ExtResource("2_kln2b")
-expand_mode = 1
+feedtape = Array[ExtResource("3_pbw6q")]([ExtResource("4_v1gob"), ExtResource("5_jw32o"), ExtResource("6_50glp")])
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1095232342]
 position = Vector2(61, 42)
