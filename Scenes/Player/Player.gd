@@ -52,6 +52,8 @@ enum friction_types{
 var speed:float = 0.0
 ## How much gravity affects the actor.
 @export var gravity_multiplier := 1.0
+@export var wall_slide_speed := 50.0
+@export var wall_jump_multiplier := 1.2
 
 #endregion
 
@@ -60,6 +62,9 @@ func _physics_process(delta: float) -> void:
 	## Gravity
 	if not is_on_floor():
 		velocity += delta * get_gravity() * gravity_multiplier
+	
+	if is_on_wall_only() and velocity.y > wall_slide_speed:
+		velocity.y = wall_slide_speed
 		
 		
 	## Jumping
@@ -70,12 +75,21 @@ func _physics_process(delta: float) -> void:
 	
 	# Coyote jumping
 	coyote_buffer = move_toward(coyote_buffer, 0, delta)
-	if is_on_floor():
+	if is_on_floor() or is_on_wall():
 		coyote_buffer = coyote_jump_buffer
 	
 	# Jumping
 	if jump_buffer > 0 and coyote_buffer > 0:
-		velocity.y = min(velocity.y, -jump_velocity)
+		
+		## Give a little boost off the wall if wall-sliding.
+		if is_on_wall_only():
+			var jump_vector := Vector2(get_wall_normal().x, -1.0).normalized()
+			
+			velocity = jump_velocity * jump_vector * wall_jump_multiplier
+		
+		else:
+			velocity.y = min(velocity.y, -jump_velocity)
+		
 		# Reset the buffers to prevent double jumping
 		coyote_buffer = 0
 		jump_buffer = 0

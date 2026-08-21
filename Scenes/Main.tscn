@@ -64,3 +64,14 @@ texture = ExtResource("2_kln2b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=880570799]
 shape = SubResource("RectangleShape2D_xf4i5")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=533032120]
+position = Vector2(300, -43)
+rotation = 1.5707964
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2" unique_id=1184442278]
+scale = Vector2(3, 0.25)
+texture = ExtResource("2_kln2b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=1703465620]
+shape = SubResource("RectangleShape2D_xf4i5")

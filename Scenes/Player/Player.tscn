@@ -10,10 +10,12 @@ size = Vector2(24, 24)
 script = ExtResource("1_ft8w5")
 jump_velocity = 260.0
 floor_acceleration = 70.0
-air_acceleration = 55.0
+air_acceleration = 12.0
 floor_friction = 55.0
+air_friction = 5.0
 max_speed = 280.0
 gravity_multiplier = 0.8
+wall_slide_speed = 75.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1077563513]
 scale = Vector2(0.188, 0.188)
