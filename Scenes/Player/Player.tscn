@@ -8,14 +8,14 @@ size = Vector2(24, 24)
 
 [node name="Player" type="CharacterBody2D" unique_id=7221642]
 script = ExtResource("1_ft8w5")
-jump_velocity = 260.0
+jump_velocity = 270.0
 floor_acceleration = 70.0
-air_acceleration = 12.0
+air_acceleration = 20.0
 floor_friction = 55.0
 air_friction = 5.0
 max_speed = 280.0
 gravity_multiplier = 0.8
-wall_slide_speed = 75.0
+wall_jump_multiplier = 1.5
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1077563513]
 scale = Vector2(0.188, 0.188)
@@ -23,3 +23,6 @@ texture = ExtResource("1_s0eop")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=868422439]
 shape = SubResource("RectangleShape2D_xf4i5")
+
+[node name="WallJumpAngle" type="Marker2D" parent="." unique_id=1925131032]
+position = Vector2(46, -38.2)

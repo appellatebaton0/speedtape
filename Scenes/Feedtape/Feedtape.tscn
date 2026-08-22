@@ -7,8 +7,9 @@
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_ery76")
-dash_velocity = 240.0
-dash_time = 0.3
+dash_velocity = 500.0
+dash_time = 0.1
+max_after = 230.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1662630178]
 layout_mode = 0

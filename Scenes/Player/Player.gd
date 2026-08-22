@@ -11,6 +11,10 @@ var feedtape:Feedtape:
 			feedtape = Feedtape.get_instance()
 		return feedtape
 
+## The angle of a wall jump, as a normal vector
+func get_wall_jump_angle() -> Vector2:
+	return $WallJumpAngle.position.normalized()
+
 #region Exported Variables
 
 @export_group("Jumping")
@@ -52,7 +56,8 @@ enum friction_types{
 var speed:float = 0.0
 ## How much gravity affects the actor.
 @export var gravity_multiplier := 1.0
-@export var wall_slide_speed := 50.0
+@export var wall_slide_speed := 160.0
+@export var wall_slide_gravity := 0.25
 @export var wall_jump_multiplier := 1.2
 
 #endregion
@@ -60,13 +65,12 @@ var speed:float = 0.0
 func _physics_process(delta: float) -> void:
 	
 	## Gravity
-	if not is_on_floor():
+	if is_on_wall_only() and velocity.y >= 0:
+		velocity += delta * get_gravity() * wall_slide_gravity 
+		velocity.y = min(velocity.y, wall_slide_speed)
+	elif not is_on_floor():
 		velocity += delta * get_gravity() * gravity_multiplier
 	
-	if is_on_wall_only() and velocity.y > wall_slide_speed:
-		velocity.y = wall_slide_speed
-		
-		
 	## Jumping
 	# Jump buffering
 	jump_buffer = move_toward(jump_buffer, 0, delta)
@@ -83,7 +87,7 @@ func _physics_process(delta: float) -> void:
 		
 		## Give a little boost off the wall if wall-sliding.
 		if is_on_wall_only():
-			var jump_vector := Vector2(get_wall_normal().x, -1.0).normalized()
+			var jump_vector := Vector2(get_wall_normal().x, 1.0) * get_wall_jump_angle()
 			
 			velocity = jump_velocity * jump_vector * wall_jump_multiplier
 		

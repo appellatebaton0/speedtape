@@ -15,21 +15,17 @@ signal dash_ended
 @export var dash_count := 1
 var dashes_left = 0
 ## The velocity applied to the player during the dash.
-@export var dash_velocity := 330.0
+@export var dash_velocity := 440.0
 ## How long all other input is locked in favor of the dash.
-@export var dash_time := 0.4
-var dash_timer := 0.0:
-	set(to):
-		if dash_timer > 0 and to <= 0:
-			dash_cooldown_timer = dash_cooldown
-			dash_ended.emit()
-		dash_timer = to
+@export var dash_time := 0.25
+var dash_timer := 0.0
 ## The cooldown before the player can dash again.
 @export var dash_cooldown := 0.2
 var dash_cooldown_timer := 0.0
 ## The buffer time for the dashing input.
 @export var dash_buffer := 0.1
 var dash_buffer_timer := 0.0
+@export var max_after := 300.0
 
 var dash_direction := Vector2.ZERO
 
@@ -41,8 +37,20 @@ func _player_process(player:Player, delta:float) -> void:
 	
 	## Tick down all the timers we're running.
 	for timer_property in ["dash_timer", "dash_cooldown_timer", "dash_buffer_timer"]:
-		#print(timer_property, ": ", get(timer_property))
-		set(timer_property, move_toward(get(timer_property), 0.0, delta))
+		var from := get(timer_property) as float
+		var to := move_toward(from, 0.0, delta) as float
+		
+		if timer_property == "dash_timer" and from > 0 and to == 0:
+			
+			dash_cooldown_timer = dash_cooldown
+			dash_ended.emit()
+			
+			var direction := player.velocity.normalized()
+			var magnitude := minf(player.velocity.distance_to(Vector2.ZERO), max_after)
+			
+			player.velocity = direction * magnitude
+		
+		set(timer_property, to)
 	
 	## Input buffering.
 	if Input.is_action_just_pressed("Dash"): dash_buffer_timer = dash_buffer
