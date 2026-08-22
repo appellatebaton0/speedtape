@@ -6,7 +6,12 @@ static var _instance:Feedtape
 static func get_instance() -> Feedtape: return _instance
 func _init() -> void: _instance = self
 
-func _ready() -> void: restart_feedtape()
+func _ready() -> void: 
+	restart_feedtape()
+	update_feedtape_display()
+
+@onready var card_box        := $CardBox
+@onready var progress_marker := $ProgressMarker
 
 #region Dashing
 signal dash_ended
@@ -84,10 +89,48 @@ func can_dash() -> bool:
 var feedtape_index := 0:
 	set(to):
 		feedtape_index = wrap(to, 0, feedtape.size())
+		progress_marker.position.x = (48 + card_box.get_theme_constant("separation")) * feedtape_index
+		
 @export var feedtape:Array[Punchcard]
 
 func restart_feedtape() -> void:
 	feedtape_index = 0
+
+func set_feedtape(new_tape:Array[Punchcard]):
+	feedtape = new_tape
+	update_feedtape_display()
+	restart_feedtape()
+
+func update_feedtape_display() -> void:
+	
+	var card_displays:Array[PunchcardDisplay]
+	card_displays.assign(card_box.get_children())
+	
+	var slot_difference := signi(feedtape.size() - card_displays.size())
+	
+	## Need to change the number of TextureRects somehow. They're not the same.
+	while slot_difference != 0:
+		
+		print(slot_difference, " | ", feedtape.size(), "/", card_displays.size())
+		
+		match slot_difference:
+			# Need more TextureRects. Make more.
+			1:  
+				var new := PunchcardDisplay.new()
+				card_box.add_child(new)
+				card_displays.append(new)
+			
+			 # Need less TextureRects. Delete extra.
+			-1: card_displays.pop_back().queue_free()
+		
+		# Update the slot diff.
+		slot_difference = signi(feedtape.size() - card_displays.size())
+	
+	## Actually set all the overlays' textures to what they should be.
+	for i in feedtape.size():
+		card_displays[i].update_card(feedtape[i])
+		print("UPDATING ", feedtape[i])
+	
 
 func progress_feedtape() -> void:
 	

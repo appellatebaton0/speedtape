@@ -11,14 +11,14 @@ dash_velocity = 500.0
 dash_time = 0.1
 max_after = 230.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1662630178]
+[node name="CardBox" type="HBoxContainer" parent="." unique_id=1662630178]
 layout_mode = 0
 offset_right = 1122.0
 offset_bottom = 48.0
 size_flags_vertical = 0
-theme_override_constants/separation = 0
+theme_override_constants/separation = 5
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=996667538]
+[node name="ProgressMarker" type="TextureRect" parent="." unique_id=996667538]
 modulate = Color(1.339, 1.339, 1.339, 1)
 custom_minimum_size = Vector2(8, 48)
 layout_mode = 0
