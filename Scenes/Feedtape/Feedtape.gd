@@ -6,6 +6,8 @@ static var _instance:Feedtape
 static func get_instance() -> Feedtape: return _instance
 func _init() -> void: _instance = self
 
+const BOX_SIZE := 48
+
 func _ready() -> void: 
 	restart_feedtape()
 	update_feedtape_display()
@@ -89,7 +91,7 @@ func can_dash() -> bool:
 var feedtape_index := 0:
 	set(to):
 		feedtape_index = wrap(to, 0, feedtape.size())
-		progress_marker.position.x = (48 + card_box.get_theme_constant("separation")) * feedtape_index
+		progress_marker.position.x = (BOX_SIZE + card_box.get_theme_constant("separation")) * feedtape_index
 var feedtape_direction := 1:
 	set(to):
 		feedtape_direction = signi(to)

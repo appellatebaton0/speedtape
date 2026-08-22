@@ -8,6 +8,10 @@
 [ext_resource type="Resource" uid="uid://bw7s5otqj6qqu" path="res://Assets/Punchcards/RightPunchcard.tres" id="5_jw32o"]
 [ext_resource type="Resource" uid="uid://30snqrwweqeg" path="res://Assets/Punchcards/LeftPunchcard.tres" id="6_50glp"]
 [ext_resource type="Script" uid="uid://din0pcxshj7gj" path="res://Scenes/Punchcard/PunchcardDecorator/DashDecorator.gd" id="6_jw32o"]
+[ext_resource type="FontFile" uid="uid://d1r1qdk7lpnpq" path="res://Assets/Fonts/monogram.ttf" id="8_vy5pj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xf4i5"]
+size = Vector2(384, 32)
 
 [sub_resource type="Resource" id="Resource_ery76"]
 script = ExtResource("6_jw32o")
@@ -19,40 +23,55 @@ script = ExtResource("6_jw32o")
 decorates = ExtResource("4_v1gob")
 metadata/_custom_type_script = "uid://din0pcxshj7gj"
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xf4i5"]
-size = Vector2(384, 32)
+[sub_resource type="Shader" id="Shader_sgabn"]
+code = "shader_type canvas_item;
+
+uniform vec2 multiplier = vec2(2.);
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	
+	bool flip = false;
+	
+	if (int(UV.x * multiplier.x) % 2 == 1){flip = !flip;}
+	if (int(UV.y * multiplier.y) % 2 == 1){flip = !flip;}
+	
+	if (flip){
+		COLOR.rgb = vec3(0.4);
+	}
+	
+	// Called for every pixel the material is visible on.
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uptjb"]
+shader = SubResource("Shader_sgabn")
+shader_parameter/multiplier = Vector2(256, 128)
+
+[sub_resource type="Gradient" id="Gradient_bmxlf"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dhcmq"]
+gradient = SubResource("Gradient_bmxlf")
+width = 12
+height = 12
 
 [node name="Main" type="Node" unique_id=1007283302]
 
 [node name="Player" parent="." unique_id=7221642 instance=ExtResource("1_idj7w")]
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1635350139]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1415683420]
-
-[node name="HUD" type="Control" parent="CanvasLayer" unique_id=2093146616]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/HUD" unique_id=612212679]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="Feedtape" parent="CanvasLayer/HUD/MarginContainer" unique_id=719412933 instance=ExtResource("2_rgh2o")]
-layout_mode = 2
-feedtape = Array[ExtResource("3_pbw6q")]([SubResource("Resource_ery76"), ExtResource("5_jw32o"), SubResource("Resource_8rmsp"), ExtResource("6_50glp")])
+position = Vector2(2, 0)
+metadata/_edit_lock_ = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1095232342]
 position = Vector2(61, 42)
@@ -129,3 +148,52 @@ texture = ExtResource("2_kln2b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D7" unique_id=1175874239]
 shape = SubResource("RectangleShape2D_xf4i5")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1415683420]
+
+[node name="HUD" type="Control" parent="CanvasLayer" unique_id=2093146616]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/HUD" unique_id=612212679]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="Feedtape" parent="CanvasLayer/HUD/MarginContainer" unique_id=719412933 instance=ExtResource("2_rgh2o")]
+layout_mode = 2
+feedtape = Array[ExtResource("3_pbw6q")]([SubResource("Resource_ery76"), ExtResource("5_jw32o"), SubResource("Resource_8rmsp"), ExtResource("6_50glp")])
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/HUD" unique_id=1871873195]
+material = SubResource("ShaderMaterial_uptjb")
+layout_mode = 0
+offset_left = 5.0
+offset_top = 9.0
+offset_right = 261.0
+offset_bottom = 137.0
+texture = SubResource("GradientTexture2D_dhcmq")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/HUD" unique_id=1571945659]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 9.0
+offset_right = 480.0
+offset_bottom = 170.0
+theme_override_fonts/font = ExtResource("8_vy5pj")
+theme_override_font_sizes/font_size = 32
+text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+_-.,\\|\\;:'\"?~!@#$%^&*()_+{
+}[]<>"

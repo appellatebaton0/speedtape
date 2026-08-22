@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bc1h3k0ro2kf2"]
 
 [ext_resource type="Script" uid="uid://bx5mroo1bmi74" path="res://Scenes/Player/Player.gd" id="1_ft8w5"]
-[ext_resource type="Texture2D" uid="uid://bcg2flavqkjxn" path="res://icon.svg" id="1_s0eop"]
+[ext_resource type="Texture2D" uid="uid://dgk4sviq1qys7" path="res://Assets/Textures/Demo.png" id="2_ft8w5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xf4i5"]
 size = Vector2(24, 24)
@@ -18,8 +18,8 @@ gravity_multiplier = 0.8
 wall_jump_multiplier = 1.5
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1077563513]
-scale = Vector2(0.188, 0.188)
-texture = ExtResource("1_s0eop")
+texture_filter = 1
+texture = ExtResource("2_ft8w5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=868422439]
 shape = SubResource("RectangleShape2D_xf4i5")
