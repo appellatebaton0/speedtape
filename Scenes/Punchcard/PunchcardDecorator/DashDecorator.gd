@@ -11,5 +11,4 @@ func get_overlay() -> Texture2D:
 	
 	new.gradient = grad
 	
-	print("RETURNIN'")
 	return new

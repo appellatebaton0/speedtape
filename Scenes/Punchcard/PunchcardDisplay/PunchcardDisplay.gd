@@ -7,21 +7,22 @@ var _card:Punchcard
 ## When one of these is created...
 func _init(set_card:Punchcard = null) -> void:
 	## Set the card up.
-	if set_card != null: update_card(set_card)
+	if set_card != null: update_display(set_card)
 	
 	## Set the size so that the texture(s) display correctly.
 	expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	custom_minimum_size = Vector2.ONE * 48
 
 ## Update the current card, and the texture/displays, etc.
-func update_card(to:Punchcard):
-	_card = to
+func update_display(new_card:Punchcard = null) -> void:
+	
+	if new_card != null: _card = new_card
 	
 	## get_texture is always the underlying Punchcard's texture, so we don't 
 	## have to worry about this returning a PunchcardDecorator null.
 	texture = _card.get_texture() 
 	
-	var current_decorator:Punchcard = to
+	var current_decorator:Punchcard = _card
 	var decorator_overlays:Array[Texture2D]
 	
 	## Trace down the chain of decorators (if any), picking up all the overlay_textures.

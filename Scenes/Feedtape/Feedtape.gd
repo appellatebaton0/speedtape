@@ -90,8 +90,11 @@ var feedtape_index := 0:
 	set(to):
 		feedtape_index = wrap(to, 0, feedtape.size())
 		progress_marker.position.x = (48 + card_box.get_theme_constant("separation")) * feedtape_index
-		
+var feedtape_direction := 1:
+	set(to):
+		feedtape_direction = signi(to)
 @export var feedtape:Array[Punchcard]
+var card_displays:Array[PunchcardDisplay]
 
 func restart_feedtape() -> void:
 	feedtape_index = 0
@@ -103,15 +106,10 @@ func set_feedtape(new_tape:Array[Punchcard]):
 
 func update_feedtape_display() -> void:
 	
-	var card_displays:Array[PunchcardDisplay]
-	card_displays.assign(card_box.get_children())
-	
 	var slot_difference := signi(feedtape.size() - card_displays.size())
 	
 	## Need to change the number of TextureRects somehow. They're not the same.
 	while slot_difference != 0:
-		
-		print(slot_difference, " | ", feedtape.size(), "/", card_displays.size())
 		
 		match slot_difference:
 			# Need more TextureRects. Make more.
@@ -128,15 +126,14 @@ func update_feedtape_display() -> void:
 	
 	## Actually set all the overlays' textures to what they should be.
 	for i in feedtape.size():
-		card_displays[i].update_card(feedtape[i])
-		print("UPDATING ", feedtape[i])
-	
+		card_displays[i].update_display(feedtape[i])
 
 func progress_feedtape() -> void:
 	
 	## Crunch the current punchcard.
 	feedtape[feedtape_index].run(self)
+	card_displays[feedtape_index].update_display()
 	
-	feedtape_index += 1
+	feedtape_index += feedtape_direction
 
 #endregion
