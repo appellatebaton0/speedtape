@@ -100,6 +100,7 @@ var card_displays:Array[PunchcardDisplay]
 
 func restart_feedtape() -> void:
 	feedtape_index = 0
+	feedtape_direction = 1
 
 func set_feedtape(new_tape:Array[Punchcard]):
 	feedtape = new_tape

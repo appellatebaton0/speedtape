@@ -7,8 +7,9 @@
 [ext_resource type="Resource" uid="uid://7gdbj7apr7be" path="res://Assets/Punchcards/UpPunchcard.tres" id="4_v1gob"]
 [ext_resource type="Resource" uid="uid://bw7s5otqj6qqu" path="res://Assets/Punchcards/RightPunchcard.tres" id="5_jw32o"]
 [ext_resource type="Resource" uid="uid://30snqrwweqeg" path="res://Assets/Punchcards/LeftPunchcard.tres" id="6_50glp"]
-[ext_resource type="Script" uid="uid://din0pcxshj7gj" path="res://Scenes/Punchcard/PunchcardDecorator/DashDecorator.gd" id="6_jw32o"]
+[ext_resource type="Script" uid="uid://din0pcxshj7gj" path="res://Scenes/Punchcard/PunchcardDecorator/RenewDecorator.gd" id="6_jw32o"]
 [ext_resource type="Texture2D" uid="uid://dmnkcwoamq5ip" path="res://Assets/Textures/MenuBackdrop.png" id="9_4kpch"]
+[ext_resource type="Shader" uid="uid://ditppuuk1mppv" path="res://Assets/Shaders/DitheringTransition.gdshader" id="10_frkhe"]
 [ext_resource type="Texture2D" uid="uid://dij05d22n8qsi" path="res://Assets/Textures/ScreenTexture.png" id="10_grg3l"]
 [ext_resource type="Texture2D" uid="uid://dfu2vqsbonk52" path="res://Assets/Textures/ComputerButton.png" id="11_frkhe"]
 
@@ -24,6 +25,20 @@ metadata/_custom_type_script = "uid://din0pcxshj7gj"
 script = ExtResource("6_jw32o")
 decorates = ExtResource("4_v1gob")
 metadata/_custom_type_script = "uid://din0pcxshj7gj"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cht3v"]
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ttckb"]
+noise = SubResource("FastNoiseLite_cht3v")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gsfb5"]
+shader = ExtResource("10_frkhe")
+shader_parameter/multiplier = Vector2(129, 99)
+shader_parameter/threshold = 0.5
+shader_parameter/smoothing = 0.73
+shader_parameter/noise = SubResource("NoiseTexture2D_ttckb")
+shader_parameter/transition_color = Color(0.10980392, 0.11764706, 0.20392157, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u4muc"]
 atlas = ExtResource("11_frkhe")
@@ -114,6 +129,7 @@ texture = ExtResource("2_kln2b")
 shape = SubResource("RectangleShape2D_xf4i5")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1415683420]
+visible = false
 
 [node name="HUD" type="Control" parent="CanvasLayer" unique_id=2093146616]
 layout_mode = 3
@@ -162,6 +178,7 @@ layout_mode = 2
 size_flags_vertical = 4
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/HUD/TextureRect/HBoxContainer/VBoxContainer" unique_id=609162809]
+material = SubResource("ShaderMaterial_gsfb5")
 custom_minimum_size = Vector2(258, 198)
 layout_mode = 2
 texture = ExtResource("10_grg3l")

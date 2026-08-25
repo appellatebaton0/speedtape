@@ -42,4 +42,8 @@ void fragment() {
 		COLOR.rgb = transition_color.rgb;
 		COLOR.a *= transition_color.a;
 	}
+	
+	// DEBUG VIEW
+	//COLOR.b = index;
+	//COLOR.r = texture(noise, new_uv).r;
 }

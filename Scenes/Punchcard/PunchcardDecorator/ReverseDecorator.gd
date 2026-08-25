@@ -1,6 +1,7 @@
-class_name DashDecorator extends PunchcardDecorator
+class_name REVERSE extends PunchcardDecorator
+## Reverses the direction the feedtape moves.
 
-func run_decoration(to:Feedtape) -> void: to.dashes_left += 1
+func run_decoration(to:Feedtape) -> void: to.feedtape_direction *= -1
 func get_overlay() -> Texture2D: 
 	
 	var new := GradientTexture1D.new()

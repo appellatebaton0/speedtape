@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Punchcard" format=3 uid="uid://hy1o6rsw5tmy"]
+
+[ext_resource type="Script" uid="uid://dg7mpiann4iwq" path="res://Scenes/Punchcard/Punchcard.gd" id="1_sbsh5"]
+
+[sub_resource type="Gradient" id="Gradient_70js3"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ery76"]
+gradient = SubResource("Gradient_70js3")
+fill_from = Vector2(1, 1)
+
+[resource]
+script = ExtResource("1_sbsh5")
+_direction = Vector2(-1, 1)
+_texture = SubResource("GradientTexture2D_ery76")
+metadata/_custom_type_script = "uid://dg7mpiann4iwq"
